@@ -151,10 +151,11 @@ AppendMenu.prototype._getContext = function(element) {
  *
  * @param { DiagramElement } element
  * @param { Point } position
+ * @param { string } search
  *
  * @return { Promise<AppendMenuResult> }
  */
-AppendMenu.prototype.open = function(element, position) {
+AppendMenu.prototype.open = function(element, position, search) {
 
   const {
     entries
@@ -164,6 +165,7 @@ AppendMenu.prototype.open = function(element, position) {
     <${AppendMenuComponent}
       entries=${ entries }
       onClose=${ onClose }
+      search=${ search }
       title=${ this._isAppendAnything() ? 'Append element' : 'Append connector' }
       showCategories=${ this._isAppendAnything() }
     />
@@ -209,7 +211,7 @@ function AppendMenuComponent(props) {
   const inputRef = useRef();
   const resultsRef = useRef();
 
-  const [ value, setValue ] = useState('');
+  const [ value, setValue ] = useState(props.search || '');
 
   const [ templates, setTemplates ] = useState(props.entries);
   const [ selectedTemplate, setSelectedTemplate ] = useState(templates[0]);
@@ -323,6 +325,7 @@ function AppendMenuComponent(props) {
 
         <input
           ref=${ inputRef }
+          value=${ value }
           type="text"
           onKeyup=${ handleKey }
           onKeydown=${ handleKeyDown }

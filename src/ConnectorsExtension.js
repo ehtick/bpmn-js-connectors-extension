@@ -103,7 +103,7 @@ ConnectorsExtension.prototype._getAppendMenuPosition = function(element) {
   return pos;
 };
 
-ConnectorsExtension.prototype.appendAnything = function(event, element) {
+ConnectorsExtension.prototype.appendAnything = function(event, element, search) {
 
   const appendMenu = this._appendMenu;
 
@@ -116,7 +116,7 @@ ConnectorsExtension.prototype.appendAnything = function(event, element) {
     cursor: event && { x: event.x, y: event.y }
   };
 
-  return appendMenu.open(element, position).then(result => {
+  return appendMenu.open(element, position, search).then(result => {
 
     if (!result) {
       return;
@@ -249,7 +249,7 @@ ConnectorsExtension.prototype.getContextPadEntries = function(element) {
           title: translate('Append connector'),
           action: {
             click: (event, element) => {
-              this.appendAnything(event, element);
+              this.appendAnything(event, element, appendAnything && 'connector');
             }
           }
         };
